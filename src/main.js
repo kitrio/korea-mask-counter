@@ -6,7 +6,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import leaflet from 'leaflet'
 Vue.config.productionTip = false
-Vue.prototype.$lealet = leaflet
+Vue.prototype.$leaflet = leaflet
 new Vue({
   router,
   store,
