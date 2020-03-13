@@ -36,7 +36,7 @@
           >
             <v-card
               :elevation="hover ? 12 : 2"
-              color="#00FF00"
+              v-bind:color="setColor(item.remain_stat)"
             >
               <v-card-text>{{ item.addr }}</v-card-text>
               <v-card-text>{{ item.name }}</v-card-text>
@@ -129,18 +129,18 @@ export default {
       })
       for (const place in this.list.stores) {
         const obj = this.list.stores[place]
-        const icon = new LeafIcon({ iconUrl: `assets/${this.setIcon(obj.remain_stat)}` })
+        const icon = new LeafIcon({ iconUrl: `assets/leaf-${this.setColor(obj.remain_stat)}.png` })
         L.marker([obj.lat, obj.lng], { icon: icon }).addTo(this.mapContainer)
       }
     },
-    setIcon (remainStat) {
-      const icon = new Map()
-      icon.set('full', 'leaf-green.png')
-      icon.set('some', 'leaf-yellow.png')
-      icon.set('few', 'leaf-red.png')
-      icon.set('empty', 'leaf-gray.png')
-      icon.set('break', 'leaf-gray.png')
-      return icon.get(remainStat)
+    setColor (remainStat) {
+      const color = new Map()
+      color.set('full', 'green')
+      color.set('some', 'yellow')
+      color.set('few', 'red')
+      color.set('empty', 'gray')
+      color.set('break', 'gray')
+      return color.get(remainStat)
     },
     getLocationAllow () {
       navigator.geolocation.getCurrentPosition(function (pos) {
