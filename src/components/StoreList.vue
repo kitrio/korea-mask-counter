@@ -1,22 +1,9 @@
 <template>
   <v-app>
-    <l-map
-      ref="maskMap"
-      :max-zoom="16"
-      :zoom="zoom"
-      :center="center"
-      @update:center="centerUpdate"
-    >
-      <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors"
-      />
-      <l-marker :lat-lng="withPopup">
-        <l-popup>
-          
-        </l-popup>
-      </l-marker>
-    </l-map>
+    <div
+      id="maskMap"
+      ref="refMaskMap"
+    />
     <v-container
       fluid
       grid-list-md
@@ -29,7 +16,7 @@
         hide-details
         prepend-inner-icon="mdi-magnify"
         label="찾기"
-        @keydown.enter="getStoreByAddr"
+        @keydown.enter="getStoreMask"
       />
       <v-layout
         row
@@ -65,69 +52,72 @@
 
 <script>
 import L from 'leaflet'
-import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet'
 export default {
   name: 'StoreList',
-  components: {
-    LMap,
-    LTileLayer,
-    LMarker,
-    LPopup
-  },
   data () {
     return {
       search: '',
-      storeByAddr: 'https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByAddr/json?address=',
-      storeByGeo: 'https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?',
+      storeUrl: 'https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByAddr/json?address=',
       list: [],
+      mapContainer: null,
+      tileLayer: null,
       layers: [],
-      currentLocation: [],
-      zoom: 16,
-      center: [35.224198, 129.0138931],
-      markers: {
-        latitude: '',
-        longitude: ''
-      }
+      currentLocation: []
+    }
+  },
+  watch: {
+    mapMove: function () {
+      this.mapContainer.on('moveend', function (ev) {
+        console.log('-----------------')
+        console.log(ev.latlng)
+        console.log(ev)
+      })
     }
   },
   mounted () {
+    this.initMap()
     this.$nextTick(() => {
-      this.mapContainer = this.$refs.refMaskMap
+      //      this.mapContainer = this.$refs.refMaskMap
+      // this.getLocationAllow()
     })
   },
   methods: {
-    getStoreByAddr () {
+    getStoreMask () {
+      this.getLocationAllow()
       const encoded = encodeURI(this.search)
       this.axios({
         method: 'get',
-        url: this.storeByAddr + encoded
+        url: this.storeUrl + encoded
       }).then((response) => {
         this.list = response.data// this.temp
-        // console.log(this.storeUrl + encoded)
         // console.log(response.data)
+        this.mapContainer.panTo([50, 30])
+        console.log(this.mapContainer.getCenter())
+
         this.marker()
       })
     },
-    getStoreByGeo (lat, lng) {
-      const currentLocation = `lat=${lat}&lng=${lng}&m=1500`
-      this.axios({
-        method: 'get',
-        url: this.storeByGeo + currentLocation
-      }).then((response) => {
-        this.list = response.data
-      }).catch(() => {
-        alert('서버가 응답하지 않습니다.')
+    initMap () {
+      this.mapContainer = L.map('maskMap').setView([35.224198, 129.0138931], 14)
+      this.tileLayer = L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+          maxZoom: 16,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }
+      )
+      this.tileLayer.addTo(this.mapContainer)
+      this.mapContainer.on('zoomend', function () {
+        // callback
+        console.log('zooooooooom')
+      })
+
+      this.mapContainer.on('dragend', function () {
+        // callback
+        console.log('draaaaaaag')
       })
     },
-    centerUpdate (center) {
-      this.center = center
-      this.getStoreByGeo(center.lat, center.lng)
-      console.log(center)
-      console.log(center.lat)
-
-      // this.maker(center)
-    },
-    marker (center) {
+    marker () {
       const LeafIcon = L.Icon.extend({
         options: {
           shadowUrl: 'assets/leaf-shadow.png',
@@ -141,7 +131,7 @@ export default {
       for (const place in this.list.stores) {
         const obj = this.list.stores[place]
         const icon = new LeafIcon({ iconUrl: `assets/${this.setIcon(obj.remain_stat)}` })
-        L.marker([obj.lat, obj.lng], { icon: icon }).addTo(this.$refs.refMaskMap)
+        L.marker([obj.lat, obj.lng], { icon: icon }).addTo(this.mapContainer)
       }
     },
     setIcon (remainStat) {
@@ -159,6 +149,8 @@ export default {
         const longitude = pos.coords.longitude
         console.log('현재 위치는 : ' + latitude + ', ' + longitude)
         // L.map('maskMap').invalidateSize()
+        // this.mapContainer.setView(new L.LatLng(35.224198, 129.0138931), 11, { animation: true })
+        this.$refs.refMaskMap.panTo([50, 30])
         // this.$refs.refMaskMap.panTo(new L.LatLng(latitude, longitude))
       })
     }
