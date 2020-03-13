@@ -16,7 +16,7 @@
         hide-details
         prepend-inner-icon="mdi-magnify"
         label="찾기"
-        @keydown.enter="getStoreMask"
+        @keydown.enter="getStoreByAddr"
       />
       <v-layout
         row
@@ -57,48 +57,24 @@ export default {
   data () {
     return {
       search: '',
-      storeUrl: 'https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByAddr/json?address=',
+      storeUrl: process.env.VUE_APP_STORE_BY_ADDR_URL,
       list: [],
       mapContainer: null,
       tileLayer: null,
       layers: [],
-      currentLocation: []
-    }
-  },
-  watch: {
-    mapMove: function () {
-      this.mapContainer.on('moveend', function (ev) {
-        console.log('-----------------')
-        console.log(ev.latlng)
-        console.log(ev)
-      })
+      currentLocation: [],
+      center: [35.224198, 129.0138931]
     }
   },
   mounted () {
     this.initMap()
-    this.$nextTick(() => {
-      //      this.mapContainer = this.$refs.refMaskMap
-      // this.getLocationAllow()
-    })
   },
   methods: {
-    getStoreMask () {
-      this.getLocationAllow()
-      const encoded = encodeURI(this.search)
-      this.axios({
-        method: 'get',
-        url: this.storeUrl + encoded
-      }).then((response) => {
-        this.list = response.data// this.temp
-        // console.log(response.data)
-        this.mapContainer.panTo([50, 30])
-        console.log(this.mapContainer.getCenter())
-
-        this.marker()
-      })
-    },
     initMap () {
-      this.mapContainer = L.map('maskMap').setView([35.224198, 129.0138931], 14)
+      this.mapContainer = L.map('maskMap', {
+        center: this.center,
+        zoom: 14
+      })
       this.tileLayer = L.tileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
@@ -107,6 +83,7 @@ export default {
         }
       )
       this.tileLayer.addTo(this.mapContainer)
+      const getStoreByGeo = this.getStoreByGeo
       this.mapContainer.on('zoomend', function () {
         // callback
         console.log('zooooooooom')
@@ -115,6 +92,27 @@ export default {
       this.mapContainer.on('dragend', function () {
         // callback
         console.log('draaaaaaag')
+        getStoreByGeo()
+      })
+    },
+    getStoreByAddr () {
+      const encoded = encodeURI(this.search)
+      this.axios({
+        method: 'get',
+        url: this.storeUrl + encoded
+      }).then((response) => {
+        this.list = response.data// this.temp
+        this.mapContainer.panTo([50, 30])
+        this.marker()
+      })
+    },
+    getStoreByGeo () {
+      console.log(this.mapContainer.getCenter())
+      this.axios({
+        method: 'get',
+        url: process.env.VUE_APP_STORE_BY_GEO_URL + `lat=${this.center[0]}&lng=${this.center[1]}&m=1500`
+      }).then((response) => {
+        this.list = response.data
       })
     },
     marker () {
@@ -150,7 +148,6 @@ export default {
         console.log('현재 위치는 : ' + latitude + ', ' + longitude)
         // L.map('maskMap').invalidateSize()
         // this.mapContainer.setView(new L.LatLng(35.224198, 129.0138931), 11, { animation: true })
-        this.$refs.refMaskMap.panTo([50, 30])
         // this.$refs.refMaskMap.panTo(new L.LatLng(latitude, longitude))
       })
     }
