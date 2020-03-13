@@ -58,121 +58,121 @@ export default {
       map: null,
       tileLayer: null,
       layers: [],
-      temp: {
-        address: '부산광역시 북구 화명동',
-        count: 26,
-        stores: [{
-          addr: '부산광역시 북구 금곡대로303번길 2, 106,107호 (화명동, 시티타워)',
-          code: '21800553',
-          created_at: '2020/03/11 21:35:00',
-          lat: 35.2356316,
-          lng: 129.0134634,
-          name: '메디팜이화약국',
-          remain_stat: 'empty',
-          stock_at: '2020/03/11 16:02:00',
-          type: '01'
-        },
-        {
-          addr: '부산광역시 북구 금곡대로 270, 화명동대림타운 1층 104호 (화명동)',
-          code: '21802955',
-          created_at: '2020/03/11 21:35:00',
-          lat: 35.232378,
-          lng: 129.0138931,
-          name: '웃는약국',
-          remain_stat: 'few',
-          stock_at: '2020/03/11 10:07:00',
-          type: '01'
-        }, {
-          addr: '부산광역시 북구 금곡대로 287, 3층 303호 (화명동, 삼한골든뷰)',
-          code: '21806586',
-          created_at: '2020/03/11 21:35:00',
-          lat: 35.2341962,
-          lng: 129.0132956,
-          name: '화명수약국',
-          remain_stat: 'empty',
-          stock_at: '2020/03/11 08:33:00',
-          type: '01'
-        }, {
-          addr: '부산광역시 북구 양달로8번길 16 (화명동)',
-          code: '21809364',
-          created_at: '2020/03/11 21:35:00',
-          lat: 35.2409337,
-          lng: 129.0149199,
-          name: '뉴경남약국',
-          remain_stat: 'empty',
-          stock_at: '2020/03/11 16:51:00',
-          type: '01'
-        }, {
-          addr: '부산광역시 북구 화명대로 35 (화명동)',
-          code: '21817090',
-          created_at: '2020/03/11 21:35:00',
-          lat: 35.2351669,
-          lng: 129.0119922,
-          name: '이상약국',
-          remain_stat: 'empty',
-          stock_at: '2020/03/11 15:16:00',
-          type: '01'
-        }, {
-          addr: '부산광역시 북구 양달로 74, 화명동부종합상가 118호 (화명동)',
-          code: '21820562',
-          created_at: '2020/03/11 21:35:00',
-          lat: 35.2440036,
-          lng: 129.0211645,
-          name: '그린약국',
-          remain_stat: 'empty',
-          stock_at: '2020/03/11 08:38:00',
-          type: '01'
-        }, {
-          addr: '부산광역시 북구 금곡대로 224 (화명동)',
-          code: '21825831',
-          created_at: '2020/03/11 21:35:00',
-          lat: 35.2283075,
-          lng: 129.0126636,
-          name: '비타민약국',
-          remain_stat: 'empty',
-          stock_at: '2020/03/11 14:57:00',
-          type: '01'
-        }, {
-          addr: '부산광역시 북구 금곡대로 166, 316호 (화명동, 롯데캐슬플라자)',
-          code: '21827389',
-          created_at: '2020/03/11 21:35:00',
-          lat: 35.2220606,
-          lng: 129.0106434,
-          name: '정약국',
-          remain_stat: 'empty',
-          stock_at: '2020/03/11 11:47:00',
-          type: '01'
-        }, {
-          addr: '부산광역시 북구 금곡대로 287, 6층 608호 (화명동)',
-          code: '21827800',
-          created_at: '2020/03/11 21:35:00',
-          lat: 35.2341962,
-          lng: 129.0132956,
-          name: '건강한약국',
-          remain_stat: 'empty',
-          stock_at: '2020/03/11 08:33:00',
-          type: '01'
-        }, {
-          addr: '부산광역시 북구 학사로 15 (화명동)',
-          code: '21827893',
-          created_at: '2020/03/11 21:35:00',
-          lat: 35.224198,
-          lng: 129.0076403,
-          name: '대학로약국',
-          remain_stat: 'empty',
-          stock_at: '2020/03/11 09:06:00',
-          type: '01'
-        }
+      LeafIcon: null
+      // temp: {
+      //   address: '부산광역시 북구 화명동',
+      //   count: 26,
+      //   stores: [{
+      //     addr: '부산광역시 북구 금곡대로303번길 2, 106,107호 (화명동, 시티타워)',
+      //     code: '21800553',
+      //     created_at: '2020/03/11 21:35:00',
+      //     lat: 35.2356316,
+      //     lng: 129.0134634,
+      //     name: '메디팜이화약국',
+      //     remain_stat: 'empty',
+      //     stock_at: '2020/03/11 16:02:00',
+      //     type: '01'
+      //   },
+      //   {
+      //     addr: '부산광역시 북구 금곡대로 270, 화명동대림타운 1층 104호 (화명동)',
+      //     code: '21802955',
+      //     created_at: '2020/03/11 21:35:00',
+      //     lat: 35.232378,
+      //     lng: 129.0138931,
+      //     name: '웃는약국',
+      //     remain_stat: 'few',
+      //     stock_at: '2020/03/11 10:07:00',
+      //     type: '01'
+      //   }, {
+      //     addr: '부산광역시 북구 금곡대로 287, 3층 303호 (화명동, 삼한골든뷰)',
+      //     code: '21806586',
+      //     created_at: '2020/03/11 21:35:00',
+      //     lat: 35.2341962,
+      //     lng: 129.0132956,
+      //     name: '화명수약국',
+      //     remain_stat: 'empty',
+      //     stock_at: '2020/03/11 08:33:00',
+      //     type: '01'
+      //   }, {
+      //     addr: '부산광역시 북구 양달로8번길 16 (화명동)',
+      //     code: '21809364',
+      //     created_at: '2020/03/11 21:35:00',
+      //     lat: 35.2409337,
+      //     lng: 129.0149199,
+      //     name: '뉴경남약국',
+      //     remain_stat: 'empty',
+      //     stock_at: '2020/03/11 16:51:00',
+      //     type: '01'
+      //   }, {
+      //     addr: '부산광역시 북구 화명대로 35 (화명동)',
+      //     code: '21817090',
+      //     created_at: '2020/03/11 21:35:00',
+      //     lat: 35.2351669,
+      //     lng: 129.0119922,
+      //     name: '이상약국',
+      //     remain_stat: 'empty',
+      //     stock_at: '2020/03/11 15:16:00',
+      //     type: '01'
+      //   }, {
+      //     addr: '부산광역시 북구 양달로 74, 화명동부종합상가 118호 (화명동)',
+      //     code: '21820562',
+      //     created_at: '2020/03/11 21:35:00',
+      //     lat: 35.2440036,
+      //     lng: 129.0211645,
+      //     name: '그린약국',
+      //     remain_stat: 'empty',
+      //     stock_at: '2020/03/11 08:38:00',
+      //     type: '01'
+      //   }, {
+      //     addr: '부산광역시 북구 금곡대로 224 (화명동)',
+      //     code: '21825831',
+      //     created_at: '2020/03/11 21:35:00',
+      //     lat: 35.2283075,
+      //     lng: 129.0126636,
+      //     name: '비타민약국',
+      //     remain_stat: 'empty',
+      //     stock_at: '2020/03/11 14:57:00',
+      //     type: '01'
+      //   }, {
+      //     addr: '부산광역시 북구 금곡대로 166, 316호 (화명동, 롯데캐슬플라자)',
+      //     code: '21827389',
+      //     created_at: '2020/03/11 21:35:00',
+      //     lat: 35.2220606,
+      //     lng: 129.0106434,
+      //     name: '정약국',
+      //     remain_stat: 'empty',
+      //     stock_at: '2020/03/11 11:47:00',
+      //     type: '01'
+      //   }, {
+      //     addr: '부산광역시 북구 금곡대로 287, 6층 608호 (화명동)',
+      //     code: '21827800',
+      //     created_at: '2020/03/11 21:35:00',
+      //     lat: 35.2341962,
+      //     lng: 129.0132956,
+      //     name: '건강한약국',
+      //     remain_stat: 'empty',
+      //     stock_at: '2020/03/11 08:33:00',
+      //     type: '01'
+      //   }, {
+      //     addr: '부산광역시 북구 학사로 15 (화명동)',
+      //     code: '21827893',
+      //     created_at: '2020/03/11 21:35:00',
+      //     lat: 35.224198,
+      //     lng: 129.0076403,
+      //     name: '대학로약국',
+      //     remain_stat: 'empty',
+      //     stock_at: '2020/03/11 09:06:00',
+      //     type: '01'
+      //   }
 
-        ]
-      }
+      //   ]
+      // }
     }
   },
   watch: {
 
   },
   mounted () {
-    this.getStoreMask()
     this.initMap()
   },
   methods: {
@@ -182,10 +182,11 @@ export default {
         method: 'get',
         url: this.storeUrl + encoded
       }).then((response) => {
-        this.list = response.data// this.temp// response.data
+        this.list = response.data// this.temp
         // console.log(encoded)
         // console.log(this.storeUrl + encoded)
         // console.log(response.data)
+        this.mapMarker()
       })
     },
     initMap () {
@@ -198,9 +199,8 @@ export default {
         }
       )
       this.$leaflet.tileLayer.addTo(this.maskMap)
-      this.initLayers()
     },
-    initLayers () {
+    mapMarker () {
       const LeafIcon = this.$leaflet.Icon.extend({
         options: {
           shadowUrl: 'assets/leaf-shadow.png',
@@ -211,8 +211,8 @@ export default {
           popupAnchor: [-3, -76]
         }
       })
-      for (const place in this.temp.stores) {
-        const obj = this.temp.stores[place]
+      for (const place in this.list.stores) {
+        const obj = this.list.stores[place]
         const icon = new LeafIcon({ iconUrl: `assets/${this.setIcon(obj.remain_stat)}` })
         this.$leaflet.marker([obj.lat, obj.lng], { icon: icon }).addTo(this.maskMap)
       }
@@ -223,8 +223,10 @@ export default {
       icon.set('some', 'leaf-yellow.png')
       icon.set('few', 'leaf-red.png')
       icon.set('empty', 'leaf-gray.png')
+      icon.set('break', 'leaf-gray.png')
       return icon.get(remainStat)
     }
+
   }
 }
 </script>
