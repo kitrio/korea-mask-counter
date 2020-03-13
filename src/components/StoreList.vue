@@ -42,7 +42,7 @@
               <v-card-text>{{ item.name }}</v-card-text>
               <v-card-text>들어오는 시간{{ item.stock_at }}</v-card-text>
               <v-card-text>마지막 확인된 시간{{ item.created_at }}</v-card-text>
-              <v-card-text>마스크 수량 {{ item.remain_stat }}</v-card-text>
+              <v-card-text>마스크 {{ setName(item.remain_stat) }}</v-card-text>
             </v-card>
           </v-hover>
         </v-flex>
@@ -140,6 +140,15 @@ export default {
       color.set('few', 'red')
       color.set('empty', 'gray')
       color.set('break', 'gray')
+      return color.get(remainStat)
+    },
+    setName (remainStat) {
+      const color = new Map()
+      color.set('full', '100개 충분해요')
+      color.set('some', '100에서 30개')
+      color.set('few', '부족해요')
+      color.set('empty', '재고 없어요')
+      color.set('break', '판매중지')
       return color.get(remainStat)
     },
     getLocationAllow () {
