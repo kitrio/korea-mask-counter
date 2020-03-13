@@ -4,7 +4,7 @@ module.exports = {
     node: true
   },
   extends: [
-    'plugin:vue/essential',
+    'plugin:vue/recommended',
     '@vue/standard'
   ],
   parserOptions: {
@@ -12,10 +12,16 @@ module.exports = {
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-labels': 'off',
+    'no-unused-expressions': 'off',
+    'no-unreachable': 'off'
   },
   globals: {
-    options: false
+    options: false,
+    camelcase: false,
+    'prefer-const': false,
+    '<l-popup>': false
   },
   overrides: [
     {

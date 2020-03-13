@@ -42,6 +42,7 @@
               <v-card-text>{{ item.name }}</v-card-text>
               <v-card-text>들어오는 시간{{ item.stock_at }}</v-card-text>
               <v-card-text>마지막 확인된 시간{{ item.created_at }}</v-card-text>
+              <v-card-text>마스크 수량 {{ item.remain_stat }}</v-card-text>
             </v-card>
           </v-hover>
         </v-flex>
@@ -57,7 +58,6 @@ export default {
   data () {
     return {
       search: '',
-      storeUrl: process.env.VUE_APP_STORE_BY_ADDR_URL,
       list: [],
       mapContainer: null,
       tileLayer: null,
@@ -86,12 +86,11 @@ export default {
       const getStoreByGeo = this.getStoreByGeo
       this.mapContainer.on('zoomend', function () {
         // callback
-        console.log('zooooooooom')
+        // getStoreByGeo()
       })
 
       this.mapContainer.on('dragend', function () {
         // callback
-        console.log('draaaaaaag')
         getStoreByGeo()
       })
     },
@@ -99,7 +98,7 @@ export default {
       const encoded = encodeURI(this.search)
       this.axios({
         method: 'get',
-        url: this.storeUrl + encoded
+        url: process.env.VUE_APP_STORE_BY_ADDR_URL + encoded
       }).then((response) => {
         this.list = response.data// this.temp
         this.mapContainer.panTo([50, 30])
@@ -107,12 +106,14 @@ export default {
       })
     },
     getStoreByGeo () {
-      console.log(this.mapContainer.getCenter())
+      this.center[0] = this.mapContainer.getCenter().lat
+      this.center[1] = this.mapContainer.getCenter().lng
       this.axios({
         method: 'get',
         url: process.env.VUE_APP_STORE_BY_GEO_URL + `lat=${this.center[0]}&lng=${this.center[1]}&m=1500`
       }).then((response) => {
         this.list = response.data
+        this.marker()
       })
     },
     marker () {

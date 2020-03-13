@@ -4,10 +4,15 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import leaflet from 'leaflet'
+import L from 'leaflet'
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
+import 'leaflet/dist/leaflet.css'
 Vue.config.productionTip = false
-Vue.prototype.$leaflet = leaflet
 new Vue({
+  L,
+  LMap,
+  LMarker,
+  LTileLayer,
   router,
   store,
   vuetify,
