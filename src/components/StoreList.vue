@@ -134,12 +134,12 @@ export default {
       for (const place in this.list.stores) {
         const obj = this.list.stores[place]
         const icon = new LeafIcon({ iconUrl: `assets/leaf-${this.setColor(obj.remain_stat)}.png` })
-        L.marker([obj.lat, obj.lng], { icon: icon }).addTo(this.mapContainer)
+        L.marker([obj.lat, obj.lng], { icon: icon }).bindPopup(obj.name).openPopup().addTo(this.mapContainer)
       }
     },
     setColor (remainStat) {
       const color = new Map()
-      color.set('full', 'green')
+      color.set('planty', 'green')
       color.set('some', 'yellow')
       color.set('few', 'red')
       color.set('empty', 'gray')
@@ -149,7 +149,7 @@ export default {
     },
     setName (remainStat) {
       const color = new Map()
-      color.set('full', '100개 충분해요')
+      color.set('planty', '100개 충분해요')
       color.set('some', '100에서 30개')
       color.set('few', '부족해요')
       color.set('empty', '재고 없어요')
