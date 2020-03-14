@@ -3,10 +3,7 @@
     <div id="nav">
       <a href="http://www.cdc.go.kr/">
         질병관리본부 바로가기
-      </a> |
-      <router-link to="/about">
-        About
-      </router-link>
+      </a>
     </div>
     <router-view />
   </div>
