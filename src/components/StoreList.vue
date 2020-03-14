@@ -5,7 +5,6 @@
       ref="refMaskMap"
     />
     <v-container
-      fluid
       grid-list-md
     >
       <p> 코로나 19 함께 극복해요 이겨 낼수 있습니다! </p>
@@ -16,7 +15,7 @@
         solo-inverted
         hide-details
         prepend-inner-icon="mdi-magnify"
-        label="찾기"
+        label="주소로 찾기"
         @keydown.enter="getStoreByAddr"
       />
       <v-layout
@@ -157,7 +156,6 @@ export default {
       navigator.geolocation.getCurrentPosition(pos => {
         this.center[0] = pos.coords.latitude
         this.center[1] = pos.coords.longitude
-        console.log(this.center)
         this.mapContainer.panTo(this.center, 15)
         this.getStoreByGeo()
       })
