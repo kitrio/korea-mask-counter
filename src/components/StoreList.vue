@@ -8,7 +8,7 @@
       grid-list-md
     >
       <p> 코로나 19 함께 극복해요 이겨 낼수 있습니다! </p>
-      <p> 약사님, 우체국, 하나로마트 직원 분들께도 감사합니다. </p>
+      <p> 약사님, 우체국, 하나로마트 직원 분들께도 감사드립니다. </p>
       <v-text-field
         v-model="search"
         flat
@@ -124,7 +124,7 @@ export default {
       const LeafIcon = L.Icon.extend({
         options: {
           shadowUrl: 'assets/leaf-shadow.png',
-          iconSize: [38, 75],
+          iconSize: [38, 65],
           shadowSize: [50, 60],
           iconAnchor: [22, 74],
           shadowAnchor: [4, 62],
