@@ -30,21 +30,26 @@
           v-for="(item, index) in list.stores"
           :key="index"
         >
-          <v-hover
-            v-slot:default="{ hover }"
-            open-delay="180"
+          <a
+            :href="`https://www.google.com/maps/place/${item.addr}/@${item.lat},${item.lng}`"
+            target="_blank"
           >
-            <v-card
-              :elevation="hover ? 12 : 2"
-              :color="setColor(item.remain_stat)"
+            <v-hover
+              v-slot:default="{ hover }"
+              open-delay="180"
             >
-              <v-card-text>{{ item.addr }}</v-card-text>
-              <v-card-text>{{ item.name }}</v-card-text>
-              <v-card-text>들어오는 시간{{ item.stock_at }}</v-card-text>
-              <v-card-text>마지막 확인된 시간{{ item.created_at }}</v-card-text>
-              <v-card-text>마스크 {{ setName(item.remain_stat) }}</v-card-text>
-            </v-card>
-          </v-hover>
+              <v-card
+                :elevation="hover ? 12 : 2"
+                :color="setColor(item.remain_stat)"
+              >
+                <v-card-text>{{ item.addr }}</v-card-text>
+                <v-card-text>{{ item.name }}</v-card-text>
+                <v-card-text>들어오는 시간{{ item.stock_at }}</v-card-text>
+                <v-card-text>마지막 확인된 시간{{ item.created_at }}</v-card-text>
+                <v-card-text>마스크 {{ setName(item.remain_stat) }}</v-card-text>
+              </v-card>
+            </v-hover>
+          </a>
         </v-flex>
       </v-layout>
     </v-container>
@@ -62,7 +67,6 @@ export default {
       mapContainer: null,
       tileLayer: null,
       layers: [],
-      currentLocation: [],
       center: [35.224198, 129.0138931]
     }
   },
@@ -140,6 +144,7 @@ export default {
       color.set('few', 'red')
       color.set('empty', 'gray')
       color.set('break', 'gray')
+      color.set('null', 'null')
       return color.get(remainStat)
     },
     setName (remainStat) {
@@ -166,4 +171,5 @@ export default {
 
 <style>
   #maskMap {margin-left: 4em; margin-right: 4em; height: 38em;}
+  a { text-decoration:none }
 </style>

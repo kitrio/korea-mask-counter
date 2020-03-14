@@ -8,8 +8,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
-    "postinstall": "npm install express"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
