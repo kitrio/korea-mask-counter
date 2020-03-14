@@ -8,7 +8,8 @@
       fluid
       grid-list-md
     >
-      <p>힘내요 </p>
+      <p> 코로나 19 함께 극복해요 이겨 낼수 있습니다! </p>
+      <p> 약사님, 우체국, 하나로마트 직원 분들께도 감사합니다. </p>
       <v-text-field
         v-model="search"
         flat
@@ -36,7 +37,7 @@
           >
             <v-card
               :elevation="hover ? 12 : 2"
-              v-bind:color="setColor(item.remain_stat)"
+              :color="setColor(item.remain_stat)"
             >
               <v-card-text>{{ item.addr }}</v-card-text>
               <v-card-text>{{ item.name }}</v-card-text>
@@ -68,6 +69,7 @@ export default {
   },
   mounted () {
     this.initMap()
+    this.getLocationAllow()
   },
   methods: {
     initMap () {
@@ -79,7 +81,7 @@ export default {
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
           maxZoom: 16,
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution: '오류사항: mario64aq@gmail.com </br> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }
       )
       this.tileLayer.addTo(this.mapContainer)
@@ -101,7 +103,6 @@ export default {
         url: process.env.VUE_APP_STORE_BY_ADDR_URL + encoded
       }).then((response) => {
         this.list = response.data// this.temp
-        this.mapContainer.panTo([50, 30])
         this.marker()
       })
     },
@@ -149,16 +150,16 @@ export default {
       color.set('few', '부족해요')
       color.set('empty', '재고 없어요')
       color.set('break', '판매중지')
+      color.set('null', '판매중지')
       return color.get(remainStat)
     },
     getLocationAllow () {
-      navigator.geolocation.getCurrentPosition(function (pos) {
-        const latitude = pos.coords.latitude
-        const longitude = pos.coords.longitude
-        console.log('현재 위치는 : ' + latitude + ', ' + longitude)
-        // L.map('maskMap').invalidateSize()
-        // this.mapContainer.setView(new L.LatLng(35.224198, 129.0138931), 11, { animation: true })
-        // this.$refs.refMaskMap.panTo(new L.LatLng(latitude, longitude))
+      navigator.geolocation.getCurrentPosition(pos => {
+        this.center[0] = pos.coords.latitude
+        this.center[1] = pos.coords.longitude
+        console.log(this.center)
+        this.mapContainer.panTo(this.center, 15)
+        this.getStoreByGeo()
       })
     }
   }
@@ -166,5 +167,5 @@ export default {
 </script>
 
 <style>
-  #maskMap {height: 500px;}
+  #maskMap {margin-left: 4em; margin-right: 4em; height: 38em;}
 </style>

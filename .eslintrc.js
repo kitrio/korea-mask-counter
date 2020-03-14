@@ -21,7 +21,8 @@ module.exports = {
     options: false,
     camelcase: false,
     'prefer-const': false,
-    '<l-popup>': false
+    '<l-popup>': false,
+    pos: false
   },
   overrides: [
     {
