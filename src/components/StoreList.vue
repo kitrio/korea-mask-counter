@@ -2,7 +2,6 @@
   <v-app>
     <div
       id="maskMap"
-      ref="refMaskMap"
     />
     <v-container
       grid-list-md
@@ -36,7 +35,7 @@
           >
             <v-hover
               v-slot:default="{ hover }"
-              open-delay="180"
+              open-delay="100"
             >
               <v-card
                 :elevation="hover ? 12 : 2"
@@ -84,19 +83,13 @@ export default {
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
           maxZoom: 16,
-          attribution: '오류사항: mario64aq@gmail.com </br> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution: '오류사항:mario64aq@gmail.com</br> &copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }
       )
       this.tileLayer.addTo(this.mapContainer)
-      const getStoreByGeo = this.getStoreByGeo
-      this.mapContainer.on('zoomend', function () {
+      this.mapContainer.on('dragend', () => {
         // callback
-        // getStoreByGeo()
-      })
-
-      this.mapContainer.on('dragend', function () {
-        // callback
-        getStoreByGeo()
+        this.getStoreByGeo()
       })
     },
     getStoreByAddr () {
@@ -104,8 +97,9 @@ export default {
       this.axios({
         method: 'get',
         url: process.env.VUE_APP_STORE_BY_ADDR_URL + encoded
-      }).then((response) => {
-        this.list = response.data// this.temp
+      }).then(response => {
+        this.list = response.data
+        this.mapContainer.panTo([this.list.stores[0].lat, this.list.stores[0].lng])
         this.marker()
       })
     },
@@ -115,7 +109,7 @@ export default {
       this.axios({
         method: 'get',
         url: process.env.VUE_APP_STORE_BY_GEO_URL + `lat=${this.center[0]}&lng=${this.center[1]}&m=1500`
-      }).then((response) => {
+      }).then(response => {
         this.list = response.data
         this.marker()
       })
@@ -125,7 +119,7 @@ export default {
         options: {
           shadowUrl: 'assets/leaf-shadow.png',
           iconSize: [38, 65],
-          shadowSize: [50, 60],
+          shadowSize: [50, 40],
           iconAnchor: [22, 74],
           shadowAnchor: [4, 62],
           popupAnchor: [-3, -76]
@@ -149,7 +143,7 @@ export default {
     },
     setName (remainStat) {
       const color = new Map()
-      color.set('planty', '100개 충분해요')
+      color.set('planty', '100개 이상 충분해요')
       color.set('some', '100에서 30개')
       color.set('few', '부족해요')
       color.set('empty', '재고 없어요')
@@ -169,7 +163,6 @@ export default {
 }
 </script>
 
-<style>
-  #maskMap {margin-left: 4em; margin-right: 4em; height: 38em;}
-  a { text-decoration:none }
+<style scoped>
+  #maskMap {margin-left: 3.5em; margin-right: 3.5em; height: 30rem;}
 </style>
