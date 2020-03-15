@@ -10,7 +10,7 @@ import axios from 'axios'
 
 const config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
-  // timeout: 60 * 1000, // Timeout
+  // timeout: 50 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
 }
 
@@ -44,11 +44,6 @@ Plugin.install = function (Vue, options) {
   window.axios = _axios
   Object.defineProperties(Vue.prototype, {
     axios: {
-      get () {
-        return _axios
-      }
-    },
-    $axios: {
       get () {
         return _axios
       }
