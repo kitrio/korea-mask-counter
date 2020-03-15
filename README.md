@@ -1,29 +1,22 @@
-# korean_mask
+# korea mask
+
+# 공공 API를 활용한 약국,우체국,하나로마크 마스크 재고현황
+https://koreamask.herokuapp.com/
+##
+Vue.js
+
 
 ## Project setup
 ```
-yarn install
+npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+npm run serve
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+npm build
 ```
-
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
