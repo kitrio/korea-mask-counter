@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     initMap () {
-      this.mapContainer = L.map(this.$refs['refMaskMap'], {
+      this.mapContainer = L.map(this.$refs.refMaskMap, {
         center: this.center,
         zoom: 14
       })
