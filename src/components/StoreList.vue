@@ -65,7 +65,7 @@ export default {
       storeList: [],
       mapContainer: null,
       tileLayer: null,
-      center: [35.224198, 129.0138931]
+      center: [35.2241, 129.0138]
     }
   },
   mounted () {
