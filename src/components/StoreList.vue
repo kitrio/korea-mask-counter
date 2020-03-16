@@ -2,11 +2,12 @@
   <v-app>
     <div
       id="maskMap"
+      ref="refMaskMap"
     />
     <v-container
       grid-list-md
     >
-      <p> 코로나 19 함께 극복해요 이겨 낼수 있습니다! </p>
+      <p> 코로나 19 함께 극복해요 이겨 낼수 있습니다!! </p>
       <p> 약사님, 우체국, 하나로마트 직원 분들께도 감사드립니다. </p>
       <v-text-field
         v-model="search"
@@ -26,7 +27,7 @@
         lg4
       >
         <v-flex
-          v-for="(item, index) in list.stores"
+          v-for="(item, index) in storeList"
           :key="index"
         >
           <a
@@ -62,7 +63,7 @@ export default {
   data () {
     return {
       search: '',
-      list: [],
+      storeList: [],
       mapContainer: null,
       tileLayer: null,
       layers: [],
@@ -75,7 +76,7 @@ export default {
   },
   methods: {
     initMap () {
-      this.mapContainer = L.map('maskMap', {
+      this.mapContainer = L.map(this.$refs['refMaskMap'], {
         center: this.center,
         zoom: 14
       })
@@ -98,8 +99,8 @@ export default {
         method: 'get',
         url: process.env.VUE_APP_STORE_BY_ADDR_URL + encoded
       }).then(response => {
-        this.list = response.data
-        this.mapContainer.panTo([this.list.stores[0].lat, this.list.stores[0].lng])
+        this.storeList = response.data.stores
+        this.mapContainer.panTo([this.storeList[0].lat, this.storeList[0].lng])
         this.marker()
       })
     },
@@ -110,7 +111,7 @@ export default {
         method: 'get',
         url: process.env.VUE_APP_STORE_BY_GEO_URL + `lat=${this.center[0]}&lng=${this.center[1]}&m=1500`
       }).then(response => {
-        this.list = response.data
+        this.storeList = response.data.stores
         this.marker()
       })
     },
@@ -125,8 +126,8 @@ export default {
           popupAnchor: [-3, -76]
         }
       })
-      for (const place in this.list.stores) {
-        const obj = this.list.stores[place]
+      for (const place in this.storeList) {
+        const obj = this.storeList[place]
         const icon = new LeafIcon({ iconUrl: `assets/leaf-${this.setColor(obj.remain_stat)}.png` })
         L.marker([obj.lat, obj.lng], { icon: icon }).bindPopup(obj.name).openPopup().addTo(this.mapContainer)
       }
@@ -164,5 +165,5 @@ export default {
 </script>
 
 <style scoped>
-  #maskMap {margin-left: 3.5em; margin-right: 3.5em; height: 30rem;}
+  #maskMap {margin-left: 3.2em; margin-right: 3.2em; height: 28rem;}
 </style>
