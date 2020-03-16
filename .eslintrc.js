@@ -13,16 +13,10 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-labels': 'off',
-    'no-unused-expressions': 'off',
-    'no-unreachable': 'off'
+    'no-labels': 'off'
   },
   globals: {
-    options: false,
-    camelcase: false,
-    'prefer-const': false,
-    '<l-popup>': false,
-    pos: false
+    options: false
   },
   overrides: [
     {
