@@ -14,7 +14,6 @@
         flat
         solo-inverted
         hide-details
-        prepend-inner-icon="mdi-magnify"
         label="주소로 찾기"
         @keydown.enter="getStoreByAddr"
       />
@@ -66,7 +65,6 @@ export default {
       storeList: [],
       mapContainer: null,
       tileLayer: null,
-      layers: [],
       center: [35.224198, 129.0138931]
     }
   },
@@ -129,7 +127,7 @@ export default {
       for (const place in this.storeList) {
         const obj = this.storeList[place]
         const icon = new LeafIcon({ iconUrl: `assets/leaf-${this.setColor(obj.remain_stat)}.png` })
-        L.marker([obj.lat, obj.lng], { icon: icon }).bindPopup(obj.name).openPopup().addTo(this.mapContainer)
+        L.marker([obj.lat, obj.lng], { icon: icon }).bindPopup(obj.name + '<br>들어오는 시간:' + obj.stock_at).openPopup().addTo(this.mapContainer)
       }
     },
     setColor (remainStat) {
