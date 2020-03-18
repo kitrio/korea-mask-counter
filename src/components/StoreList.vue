@@ -147,12 +147,25 @@ export default {
       return color.get(remainStat)
     },
     getLocationAllow () {
-      navigator.geolocation.getCurrentPosition(pos => {
-        this.center[0] = pos.coords.latitude
-        this.center[1] = pos.coords.longitude
-        this.mapContainer.panTo(this.center, 15)
-        this.getStoreByGeo()
-      })
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          this.center[0] = pos.coords.latitude
+          this.center[1] = pos.coords.longitude
+          this.mapContainer.panTo(this.center, 15)
+          this.getStoreByGeo()
+        },
+        (error) => {
+          if (error.code === 1) {
+            alert('현재위치를 찾을 수 없습니다. GPS를 켜주시길 바랍니다.')
+          }
+        },
+        (options) => {
+          this.maximumAge = 60000 // 60s
+          this.enableHighAccuracy = false
+        })
+      } else {
+        alert('GPS 위치정보를 찾을 수 없습니다. GPS를 켜주시길 바랍니다.')
+      }
     }
   }
 }
