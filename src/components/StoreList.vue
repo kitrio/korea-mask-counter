@@ -82,7 +82,7 @@ export default {
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
           maxZoom: 16,
-          attribution: '오류사항:mario64aq@gmail.com</br> &copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution: '오류사항:mario64aq@gmail.com</br>&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }
       )
       this.tileLayer.addTo(this.mapContainer)
@@ -93,25 +93,21 @@ export default {
     },
     getStoreByAddr () {
       const encoded = encodeURI(this.search)
-      this.axios({
-        method: 'get',
-        url: process.env.VUE_APP_STORE_BY_ADDR_URL + encoded
-      }).then(response => {
-        this.storeList = response.data.stores
-        this.mapContainer.panTo([this.storeList[0].lat, this.storeList[0].lng])
-        this.marker()
-      })
+      this.axios.get(process.env.VUE_APP_STORE_BY_ADDR_URL + encoded)
+        .then(response => {
+          this.storeList = response.data.stores
+          this.mapContainer.panTo([this.storeList[0].lat, this.storeList[0].lng])
+          this.marker()
+        }).catch(() => alert('서버가 응답하지 않습니다. 잠시후 다시 시도해주세요'))
     },
     getStoreByGeo () {
       this.center[0] = this.mapContainer.getCenter().lat
       this.center[1] = this.mapContainer.getCenter().lng
-      this.axios({
-        method: 'get',
-        url: process.env.VUE_APP_STORE_BY_GEO_URL + `lat=${this.center[0]}&lng=${this.center[1]}&m=1500`
-      }).then(response => {
-        this.storeList = response.data.stores
-        this.marker()
-      })
+      this.axios.get(process.env.VUE_APP_STORE_BY_GEO_URL + `lat=${this.center[0]}&lng=${this.center[1]}&m=1500`)
+        .then(response => {
+          this.storeList = response.data.stores
+          this.marker()
+        }).catch(() => alert('서버가 응답하지 않습니다. 잠시후 다시 시도해주세요'))
     },
     marker () {
       const LeafIcon = L.Icon.extend({
